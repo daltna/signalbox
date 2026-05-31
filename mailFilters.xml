@@ -29,7 +29,6 @@
     <id>tag:mail.google.com,2008:filter:1500000000002</id>
     <updated>2026-01-01T00:00:00Z</updated>
     <apps:property name="from" value="delta.com united.com aa.com southwest.com jetblue.com alaskaair.com marriott.com hilton.com airbnb.com expedia.com booking.com doordash.com uber.com grubhub.com postmates.com instacart.com target.com walmart.com costco.com amazon.com bestbuy.com apple.com homedepot.com lowes.com ebay.com nike.com adidas.com gap.com jcrew.com nordstrom.com sephora.com ulta.com hm.com zara.com macys.com wayfair.com ikea.com netflix.com hulu.com disneyplus.com spotify.com t-mobile.com" />
-    <apps:property name="hasTheWords" value="unsubscribe OR view in browser OR opt out OR sale OR coupon OR discount OR promo code OR limited time OR special offer OR shop now OR off your next OR free shipping OR deal of the day" />
     <apps:property name="label" value="Deals" />
     <apps:property name="shouldArchive" value="true" />
   </entry>
@@ -39,7 +38,6 @@
     <id>tag:mail.google.com,2008:filter:1500000000003</id>
     <updated>2026-01-01T00:00:00Z</updated>
     <apps:property name="from" value="verizon.com att.com ticketmaster.com stubhub.com" />
-    <apps:property name="hasTheWords" value="unsubscribe OR view in browser OR opt out OR sale OR coupon OR discount OR promo code OR limited time OR special offer OR shop now OR off your next OR free shipping OR deal of the day" />
     <apps:property name="label" value="Deals" />
     <apps:property name="shouldArchive" value="true" />
   </entry>
