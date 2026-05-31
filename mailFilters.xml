@@ -8,8 +8,18 @@
     <title>Mail Filter</title>
     <id>tag:mail.google.com,2008:filter:1500000000001</id>
     <updated>2026-01-01T00:00:00Z</updated>
-    <apps:property name="from" value="welcometothejungle.com linkedin.com indeed.com ziprecruiter.com glassdoor.com monster.com workday.com greenhouse.io lever.co taleo.net handshake.com simplyhired.com theinstitutes.org" />
-    <apps:property name="hasTheWords" value="job alert OR new job OR recommended jobs OR matches your search OR certification OR credential OR exam score OR continuing education OR application received OR viewed your resume OR application update OR recruiter is interested OR job opening" />
+    <apps:property name="from" value="welcometothejungle.com linkedin.com indeed.com ziprecruiter.com glassdoor.com monster.com workday.com greenhouse.io lever.co taleo.net handshake.com simplyhired.com dice.com builtin.com" />
+    <apps:property name="hasTheWords" value="job alert OR new job OR recommended jobs OR matches your search OR application received OR viewed your resume OR application update OR recruiter is interested OR job opening OR career opportunity OR hiring" />
+    <apps:property name="label" value="Careers" />
+    <apps:property name="shouldArchive" value="true" />
+  </entry>
+  <entry>
+    <category term="filter" />
+    <title>Mail Filter</title>
+    <id>tag:mail.google.com,2008:filter:1500000000007</id>
+    <updated>2026-01-01T00:00:00Z</updated>
+    <apps:property name="from" value="coursera.org udemy.com pluralsight.com linkedin.com theinstitutes.org pmi.org shrm.org comptia.org isaca.org skillshare.com udacity.com" />
+    <apps:property name="hasTheWords" value="certification OR credential OR exam OR continuing education OR professional development OR career advice OR career fair OR career growth OR industry event OR salary report OR leadership program OR course completion" />
     <apps:property name="label" value="Careers" />
     <apps:property name="shouldArchive" value="true" />
   </entry>

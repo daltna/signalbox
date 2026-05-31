@@ -63,7 +63,7 @@ These are applied by filters. They skip the inbox. You consult them when you nee
 | **Deals** | Promotional mail from retail, travel, food delivery, and entertainment brands | When you want a discount code or travel offer |
 | **Logistics** | Receipts, order confirmations, shipping tracking, 2FA codes, invoices, billing statements | When you need a receipt, tracking number, or verification code |
 | **Insights** | Newsletters and research from editorial publishers — TechCrunch, McKinsey, HBR, Wired, etc. | When you have time to read and want industry context |
-| **Careers** | Job alerts, application updates, certifications from job boards and ATS platforms | When you're actively job searching or tracking credentials |
+| **Careers** | Job alerts, application updates, certifications, professional development, career guidance, industry events, salary reports, and learning platforms | When you're actively job searching, tracking credentials, or doing career development work |
 | **Stream** | All notifications from tools you work in — GitHub, Slack, Notion, Figma, Zoom, Asana, etc. | Once daily, as a feed — not reactively |
 
 **Why nouns?** Nouns describe categories of content. A noun label answers *what is this?* — a question that can be answered by a rule, not a human.
@@ -102,9 +102,10 @@ Incoming email
 │  (TechCrunch, McKinsey, HBR, Wired, OpenAI, Product Hunt, etc.)
 │  └─ YES → label: Insights, skip inbox
 │
-├─ FROM a known job board or ATS platform?
-│  AND CONTAINS a job-specific keyword?
-│  (job alert, application received, viewed your resume, etc.)
+├─ FROM a known job board, ATS, or professional development platform?
+│  AND CONTAINS a career-related keyword?
+│  (job alert, application received, certification, professional development,
+│   career advice, career fair, industry event, salary report, etc.)
 │  └─ YES → label: Careers, skip inbox
 │
 ├─ FROM a known operational tool domain?
@@ -140,9 +141,15 @@ The domains in Insights are pure editorial senders. They only send newsletter co
 
 **Critical:** Operational tools like GitHub, Slack, Figma, and Notion are intentionally excluded from Insights. They send PR review requests, task assignments, and @mentions that require action. Those go to Stream instead. **Rule: if the domain could ever email you something that blocks someone else, it does not belong in Insights.**
 
-### Careers — domain AND keyword (both required)
+### Careers — domain AND keyword (both required), two filter entries
 
-LinkedIn also sends connection requests, profile view alerts, and "people you may know" nudges. Without the keyword gate, all of those would land in Careers. With AND logic, only emails from LinkedIn that contain "job alert," "application received," etc., hit Careers. Everything else from LinkedIn reaches your inbox.
+Careers is split into two filter entries covering two different aspects of your career:
+
+**Entry 1 — Job search:** Job boards and ATS platforms (LinkedIn, Indeed, Glassdoor, Workday, Greenhouse, etc.) with job-specific keywords. LinkedIn also sends connection requests and profile nudges that don't belong here, so the keyword gate keeps only career-action emails in this label.
+
+**Entry 2 — Professional development:** Learning platforms and certification bodies (Coursera, Udemy, PMI, SHRM, CompTIA, The Institutes, etc.) with development-specific keywords — certification, professional development, career advice, industry event, salary report, career fair, leadership programs. These are things related to *building* your career, not just searching for a job.
+
+Both entries land in the same **Careers** label. You open Careers when you're doing career work — active job search, studying for a certification, reviewing a salary report, or tracking an industry event.
 
 ### Stream — domain only (no keyword gate)
 
