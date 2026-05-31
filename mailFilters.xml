@@ -76,7 +76,7 @@
     <title>Mail Filter</title>
     <id>tag:mail.google.com,2008:filter:1500000000006</id>
     <updated>2026-01-01T00:00:00Z</updated>
-    <apps:property name="from" value="github.com gitlab.com bitbucket.org vercel.com netlify.com render.com linear.app asana.com clickup.com monday.com trello.com basecamp.com figma.com canva.com notion.so miro.com airtable.com slack.com zoom.us loom.com calendly.com salesforce.com hubspot.com aws.amazon.com cloud.google.com azure.com" />
+    <apps:property name="from" value="github.com gitlab.com bitbucket.org vercel.com netlify.com render.com railway.app neon.tech supabase.com linear.app asana.com clickup.com monday.com trello.com basecamp.com figma.com canva.com notion.so miro.com airtable.com slack.com zoom.us loom.com calendly.com salesforce.com hubspot.com azure.com jira.atlassian.com confluence.atlassian.com" />
     <apps:property name="label" value="Stream" />
     <apps:property name="shouldArchive" value="true" />
   </entry>
