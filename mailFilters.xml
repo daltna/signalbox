@@ -2,14 +2,14 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xmlns:apps="http://schemas.google.com/apps/2006">
   <title>Mail Filters</title>
   <id>tag:mail.google.com,2008:filters:</id>
-  <updated>2026-05-31T14:55:33Z</updated>
+  <updated>2026-05-31T15:03:46Z</updated>
   <entry>
     <category term="filter" />
     <title>Mail Filter</title>
     <id>tag:mail.google.com,2008:filter:1500000000001</id>
-    <updated>2026-05-31T14:55:33Z</updated>
+    <updated>2026-05-31T15:03:46Z</updated>
     <apps:property name="from" value="welcometothejungle.com linkedin.com indeed.com ziprecruiter.com glassdoor.com monster.com workday.com greenhouse.io lever.co taleo.net handshake.com simplyhired.com theinstitutes.org" />
-    <apps:property name="hasTheWords" value="&quot;job alert&quot; OR &quot;new job&quot; OR &quot;recommended jobs&quot; OR &quot;matches your search&quot; OR certification OR credential OR &quot;exam score&quot; OR &quot;continuing education&quot; OR &quot;application received&quot; OR &quot;viewed your resume&quot; OR &quot;application update&quot; OR &quot;recruiter is interested&quot; OR &quot;job opening&quot;" />
+    <apps:property name="hasTheWords" value="job alert OR new job OR recommended jobs OR matches your search OR certification OR credential OR exam score OR continuing education OR application received OR viewed your resume OR application update OR recruiter is interested OR job opening" />
     <apps:property name="label" value="Careers" />
     <apps:property name="shouldArchive" value="true" />
   </entry>
@@ -17,9 +17,9 @@
     <category term="filter" />
     <title>Mail Filter</title>
     <id>tag:mail.google.com,2008:filter:1500000000002</id>
-    <updated>2026-05-31T14:55:33Z</updated>
+    <updated>2026-05-31T15:03:46Z</updated>
     <apps:property name="from" value="delta.com united.com aa.com southwest.com jetblue.com alaskaair.com marriott.com hilton.com airbnb.com expedia.com booking.com doordash.com uber.com grubhub.com postmates.com instacart.com target.com walmart.com costco.com amazon.com bestbuy.com apple.com homedepot.com lowes.com ebay.com nike.com adidas.com gap.com jcrew.com nordstrom.com sephora.com ulta.com hm.com zara.com macys.com wayfair.com ikea.com netflix.com hulu.com disneyplus.com spotify.com t-mobile.com" />
-    <apps:property name="hasTheWords" value="unsubscribe OR &quot;view in browser&quot; OR &quot;opt out&quot; OR sale OR coupon OR discount OR &quot;promo code&quot; OR &quot;limited time&quot; OR &quot;special offer&quot; OR &quot;shop now&quot; OR &quot;off your next&quot; OR &quot;free shipping&quot; OR &quot;deal of the day&quot;" />
+    <apps:property name="hasTheWords" value="unsubscribe OR view in browser OR opt out OR sale OR coupon OR discount OR promo code OR limited time OR special offer OR shop now OR off your next OR free shipping OR deal of the day" />
     <apps:property name="label" value="Deals" />
     <apps:property name="shouldArchive" value="true" />
   </entry>
@@ -27,9 +27,9 @@
     <category term="filter" />
     <title>Mail Filter</title>
     <id>tag:mail.google.com,2008:filter:1500000000003</id>
-    <updated>2026-05-31T14:55:33Z</updated>
+    <updated>2026-05-31T15:03:46Z</updated>
     <apps:property name="from" value="verizon.com att.com ticketmaster.com stubhub.com" />
-    <apps:property name="hasTheWords" value="unsubscribe OR &quot;view in browser&quot; OR &quot;opt out&quot; OR sale OR coupon OR discount OR &quot;promo code&quot; OR &quot;limited time&quot; OR &quot;special offer&quot; OR &quot;shop now&quot; OR &quot;off your next&quot; OR &quot;free shipping&quot; OR &quot;deal of the day&quot;" />
+    <apps:property name="hasTheWords" value="unsubscribe OR view in browser OR opt out OR sale OR coupon OR discount OR promo code OR limited time OR special offer OR shop now OR off your next OR free shipping OR deal of the day" />
     <apps:property name="label" value="Deals" />
     <apps:property name="shouldArchive" value="true" />
   </entry>
@@ -37,7 +37,7 @@
     <category term="filter" />
     <title>Mail Filter</title>
     <id>tag:mail.google.com,2008:filter:1500000000004</id>
-    <updated>2026-05-31T14:55:33Z</updated>
+    <updated>2026-05-31T15:03:46Z</updated>
     <apps:property name="from" value="openai.com producthunt.com techcrunch.com venturebeat.com wired.com fastcompany.com techtarget.com hbr.org mckinsey.com gartner.com cbinsights.com crunchbase.com insider.com marketingbrew.com digiday.com adweek.com semrush.com medium.com" />
     <apps:property name="label" value="Insights" />
     <apps:property name="shouldArchive" value="true" />
@@ -46,8 +46,8 @@
     <category term="filter" />
     <title>Mail Filter</title>
     <id>tag:mail.google.com,2008:filter:1500000000005</id>
-    <updated>2026-05-31T14:55:33Z</updated>
-    <apps:property name="hasTheWords" value="receipt OR &quot;order confirmation&quot; OR &quot;security code&quot; OR &quot;verification code&quot; OR &quot;two-factor&quot; OR &quot;one-time password&quot; OR &quot;tracking number&quot; OR shipped OR delivered OR invoice OR &quot;statement is ready&quot; OR &quot;payment received&quot; OR &quot;bill due&quot; OR &quot;auto-renew&quot; OR fedex OR usps OR dhl OR &quot;transaction id&quot; OR &quot;your account statement&quot; OR &quot;sign-in alert&quot; OR &quot;password reset&quot; OR &quot;payment successful&quot; OR &quot;order has been received&quot; OR &quot;your package&quot; OR &quot;confirmation number&quot;" />
+    <updated>2026-05-31T15:03:46Z</updated>
+    <apps:property name="hasTheWords" value="receipt OR order confirmation OR security code OR verification code OR two-factor OR one-time password OR tracking number OR shipped OR delivered OR invoice OR statement is ready OR payment received OR bill due OR auto-renew OR fedex OR usps OR dhl OR transaction id OR your account statement OR sign-in alert OR password reset OR payment successful OR order has been received OR your package OR confirmation number" />
     <apps:property name="label" value="Logistics" />
     <apps:property name="shouldArchive" value="true" />
   </entry>
@@ -55,7 +55,7 @@
     <category term="filter" />
     <title>Mail Filter</title>
     <id>tag:mail.google.com,2008:filter:1500000000006</id>
-    <updated>2026-05-31T14:55:33Z</updated>
+    <updated>2026-05-31T15:03:46Z</updated>
     <apps:property name="from" value="github.com gitlab.com bitbucket.org vercel.com netlify.com render.com linear.app asana.com clickup.com monday.com trello.com basecamp.com figma.com canva.com notion.so miro.com airtable.com slack.com zoom.us loom.com calendly.com salesforce.com hubspot.com aws.amazon.com cloud.google.com azure.com" />
     <apps:property name="label" value="Stream" />
     <apps:property name="shouldArchive" value="true" />

@@ -51,19 +51,22 @@ def build_from_value(domains: list[str]) -> str:
     """Join domains with spaces (Gmail implicit OR — no OR keyword in from field)."""
     return " ".join(domains)
 
-
 def build_has_words_value(words: list[str]) -> str:
     """
-    Join keyword phrases with OR.
-    Multi-word phrases are wrapped in quotes; single words are bare.
+    Join keyword phrases with OR — no quoting.
+
+    Gmail's XML import parser does NOT decode &quot; entities inside attribute
+    values, so wrapping phrases in literal quote characters causes ElementTree
+    to emit &quot; in the file, which Gmail then reads as the literal string
+    &quot; — silently malforming or dropping the hasTheWords field entirely.
+
+    Without quotes:
+    - Single words match as-is: shipped, receipt, fedex
+    - Multi-word phrases (e.g. "order confirmation") match as an implicit AND:
+      Gmail requires both words present, which is a tighter and equally
+      reliable signal than a loose keyword match.
     """
-    parts = []
-    for word in words:
-        if " " in word or "-" in word:
-            parts.append(f'"{word}"')
-        else:
-            parts.append(word)
-    return " OR ".join(parts)
+    return " OR ".join(words)
 
 
 def split_domains(domains: list[str], limit: int = GMAIL_FIELD_CHAR_LIMIT) -> list[list[str]]:
@@ -71,19 +74,31 @@ def split_domains(domains: list[str], limit: int = GMAIL_FIELD_CHAR_LIMIT) -> li
     Split a domain list into chunks where each joined chunk stays under `limit` chars.
     Each chunk will become a separate filter entry in the XML.
     """
+    return _split_by_length(domains, sep=" ", limit=limit)
+
+
+def split_words(words: list[str], limit: int = GMAIL_FIELD_CHAR_LIMIT) -> list[list[str]]:
+    """
+    Split a has_words list into chunks where each joined chunk stays under `limit` chars.
+    Each chunk becomes a separate filter entry (entries are OR'd at the filter level).
+    """
+    return _split_by_length(words, sep=" OR ", limit=limit)
+
+
+def _split_by_length(items: list[str], sep: str, limit: int) -> list[list[str]]:
+    """Generic splitter: groups items so that sep.join(chunk) stays under limit chars."""
     chunks: list[list[str]] = []
     current: list[str] = []
     current_len = 0
 
-    for domain in domains:
-        # +1 for the space separator
-        added_len = len(domain) + (1 if current else 0)
+    for item in items:
+        added_len = len(item) + (len(sep) if current else 0)
         if current and current_len + added_len > limit:
             chunks.append(current)
-            current = [domain]
-            current_len = len(domain)
+            current = [item]
+            current_len = len(item)
         else:
-            current.append(domain)
+            current.append(item)
             current_len += added_len
 
     if current:
@@ -172,7 +187,8 @@ def build_feed(configs: list[dict]) -> tuple[ET.Element, list[str]]:
         has_words_value = build_has_words_value(keywords) if keywords else None
 
         if domains:
-            # Split domains into chunks to respect Gmail's field length limit
+            # Split domains into chunks to respect Gmail's field length limit.
+            # has_words is replicated across all domain chunks (AND logic: domain + keyword).
             chunks = split_domains(domains)
             for chunk in chunks:
                 from_value = build_from_value(chunk)
@@ -188,20 +204,28 @@ def build_feed(configs: list[dict]) -> tuple[ET.Element, list[str]]:
                 )
                 all_errors.extend(errors)
                 filter_id_counter += 1
+        elif keywords:
+            # No domains — keyword-only filter (e.g. Logistics).
+            # Split has_words into chunks to respect Gmail's field length limit.
+            # Multiple entries are OR'd at the filter level: an email matching
+            # any chunk gets the label.
+            word_chunks = split_words(keywords)
+            for chunk in word_chunks:
+                chunk_value = build_has_words_value(chunk)
+                errors = make_entry(
+                    feed=feed,
+                    filter_id=filter_id_counter,
+                    label=label,
+                    archive=archive,
+                    from_value=None,
+                    has_words_value=chunk_value,
+                    timestamp=timestamp,
+                    source=source,
+                )
+                all_errors.extend(errors)
+                filter_id_counter += 1
         else:
-            # No domains — keyword-only filter (e.g. Logistics)
-            errors = make_entry(
-                feed=feed,
-                filter_id=filter_id_counter,
-                label=label,
-                archive=archive,
-                from_value=None,
-                has_words_value=has_words_value,
-                timestamp=timestamp,
-                source=source,
-            )
-            all_errors.extend(errors)
-            filter_id_counter += 1
+            print(f"Warning: [{source}] has neither from_domains nor has_words — skipping.", file=sys.stderr)
 
     return feed, all_errors
 
