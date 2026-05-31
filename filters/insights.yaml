@@ -1,12 +1,19 @@
-# Insights: newsletters, industry media, SaaS tools, research firms.
-# Pure domain-based routing — if the sender is here, it's Insights regardless of content.
-# No has_words needed: these domains only send editorial/product content.
+# Insights: pure editorial — newsletters, research, and industry media.
+#
+# IMPORTANT: Only domains that send EXCLUSIVELY newsletter/editorial content
+# belong here. Operational tools (GitHub, Slack, Zoom, Notion, Figma, Linear,
+# Asana, ClickUp, Monday, Salesforce) are intentionally excluded — they send
+# task assignments, PR reviews, meeting invites, and direct messages that require
+# action and must reach the inbox.
+#
+# Rule of thumb: if the sender could send you something that blocks someone else,
+# it does not belong in Insights.
 
 label: Insights
 archive: true
 
 from_domains:
-  # AI & Tech
+  # AI & Tech news
   - openai.com
   - producthunt.com
   - techcrunch.com
@@ -14,34 +21,18 @@ from_domains:
   - wired.com
   - fastcompany.com
   - techtarget.com
-  # Business & Research
+  # Business & Strategy research
   - hbr.org
   - mckinsey.com
   - gartner.com
   - cbinsights.com
   - crunchbase.com
   - insider.com
-  # Marketing & Growth
+  # Marketing & Growth newsletters
   - hubspot.com
   - marketingbrew.com
   - digiday.com
   - adweek.com
   - semrush.com
-  - mailchimp.com
-  - convertkit.com
-  # Dev & Product Tools
-  - github.com
-  - linear.app
-  - notion.so
-  - figma.com
-  - canva.com
-  - miro.com
-  # Productivity & Collaboration
-  - slack.com
-  - zoom.us
-  - asana.com
-  - clickup.com
-  - monday.com
-  - salesforce.com
-  # Publishing
+  # Long-form & independent publishing
   - medium.com
