@@ -57,7 +57,17 @@
     <title>Mail Filter</title>
     <id>tag:mail.google.com,2008:filter:1500000000005</id>
     <updated>2026-01-01T00:00:00Z</updated>
-    <apps:property name="hasTheWords" value="receipt OR order confirmation OR security code OR verification code OR two-factor OR one-time password OR tracking number OR shipped OR delivered OR invoice OR statement is ready OR payment received OR bill due OR auto-renew OR fedex OR usps OR dhl OR transaction id OR your account statement OR sign-in alert OR password reset OR payment successful OR order has been received OR your package OR confirmation number" />
+    <apps:property name="from" value="ups.com fedex.com usps.com dhl.com shoprunner.com amazon.com walmart.com ebay.com target.com bestbuy.com homedepot.com lowes.com" />
+    <apps:property name="hasTheWords" value="shipped OR delivered OR tracking OR out for delivery OR order confirmation OR your order OR delivery OR shipment OR package" />
+    <apps:property name="label" value="Logistics" />
+    <apps:property name="shouldArchive" value="true" />
+  </entry>
+  <entry>
+    <category term="filter" />
+    <title>Mail Filter</title>
+    <id>tag:mail.google.com,2008:filter:1500000000008</id>
+    <updated>2026-01-01T00:00:00Z</updated>
+    <apps:property name="hasTheWords" value="receipt OR invoice OR payment received OR payment successful OR bill due OR statement is ready OR your account statement OR transaction id OR verification code OR security code OR two-factor OR one-time password OR sign-in alert OR password reset OR confirmation number OR auto-renew" />
     <apps:property name="label" value="Logistics" />
     <apps:property name="shouldArchive" value="true" />
   </entry>
