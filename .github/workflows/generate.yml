@@ -1,18 +1,20 @@
-name: Generate mailFilters.xml
+name: Validate mailFilters.xml
 
 on:
   push:
     paths:
       - "filters/**"
       - "generate.py"
+      - "mailFilters.xml"
   pull_request:
     paths:
       - "filters/**"
       - "generate.py"
+      - "mailFilters.xml"
   workflow_dispatch:
 
 jobs:
-  generate:
+  validate:
     runs-on: ubuntu-latest
 
     steps:
@@ -25,16 +27,17 @@ jobs:
       - name: Install dependencies
         run: pip install pyyaml
 
-      - name: Generate mailFilters.xml
+      - name: Regenerate mailFilters.xml
         run: python generate.py
 
-      - name: Validate output exists and is non-empty
-        run: |
-          test -s mailFilters.xml || (echo "mailFilters.xml is missing or empty" && exit 1)
+      - name: Confirm output is valid XML
+        run: python -c "import xml.etree.ElementTree as ET; ET.parse('mailFilters.xml'); print('Valid XML')"
 
-      - name: Commit updated mailFilters.xml
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "chore: regenerate mailFilters.xml"
-          file_pattern: mailFilters.xml
+      - name: Confirm committed XML matches generated XML
+        run: |
+          git diff --exit-code mailFilters.xml || {
+            echo ""
+            echo "ERROR: mailFilters.xml is out of sync with the YAML filters."
+            echo "Run 'python generate.py' locally and commit the result."
+            exit 1
+          }
