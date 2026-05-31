@@ -20,7 +20,6 @@ import argparse
 import sys
 import textwrap
 import xml.etree.ElementTree as ET
-from datetime import datetime, timezone
 from pathlib import Path
 
 import yaml
@@ -165,7 +164,10 @@ def make_entry(
 
 def build_feed(configs: list[dict]) -> tuple[ET.Element, list[str]]:
     """Build the full Atom feed element. Returns (root, errors)."""
-    timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    # Fixed timestamp: Gmail requires a valid ISO 8601 date but doesn't use it
+    # functionally. Using a fixed value keeps the output deterministic across
+    # runs, which is required for the CI diff check to pass.
+    timestamp = "2026-01-01T00:00:00Z"
     all_errors: list[str] = []
     filter_id_counter = FILTER_ID_BASE + 1
 
