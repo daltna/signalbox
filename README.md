@@ -2,7 +2,7 @@
 
 > Lowest noise. Highest signal. A data-driven Gmail filter system.
 
-Edit YAML. Run one command. Import XML. Done.
+Edit YAML. Run one command. Import XML.
 
 ```
 filters/*.yaml  →  python generate.py  →  mailFilters.xml  →  Gmail import
@@ -10,188 +10,171 @@ filters/*.yaml  →  python generate.py  →  mailFilters.xml  →  Gmail import
 
 ---
 
-## The inbox problem
+## The problem
 
-Most inboxes fail for the same reason: they are treated as **storage**, not a **decision queue**.
+Most inboxes fail structurally, not behaviorally. The inbox becomes a storage warehouse — promotional mail, shipping notifications, newsletters, job alerts, and actual human correspondence all arrive in the same place. Every visit requires triage. Every triage is cognitive overhead. Compounded daily, this is a significant drain.
 
-When the inbox holds everything — promotional mail, shipping notifications, newsletters, job alerts, and actual human correspondence — your brain has to triage every item on every visit. That cognitive tax compounds across every session, every day. The inbox stops feeling like a tool and starts feeling like a burden.
-
-The fix is not "inbox zero." Inbox zero is a behavior hack. The fix is a structural one: **make the inbox exclusively contain things that require a human decision**. Everything else routes elsewhere automatically, silently, before you ever see it.
+The fix is architectural: **make the inbox exclusively contain things that require a human decision**. Everything else — promotional noise, transactional documents, editorial content, tool notifications — routes elsewhere automatically, silently, before you ever see it.
 
 That's what signalbox does.
 
 ---
 
-## The mental model: nouns vs. verbs
+## The two-layer system
 
-Labels in this system split into two types with different jobs.
+signalbox uses Gmail filters as a first pass, then hands off to an AI agent for the second pass.
+
+```
+All incoming email
+        │
+        ▼
+┌───────────────────────────────────┐
+│   Layer 1: Gmail XML Filters      │  ← server-side, instant, free
+│   Runs on every email, always     │    handles ~80–90% of daily volume
+└───────────────────────────────────┘
+        │                       │
+        │ matched                │ not matched
+        ▼                       ▼
+  Auto-archived            Raw inbox
+  with label          ─────────────────────────────────────────────────┐
+  (Deals,              │   Layer 2: Gemini Flow (AI)                   │
+  Logistics,           │   Reads only inbox items                      │
+  Insights,            │   Classifies what needs a response            │
+  Careers,             │   Scans Sent for unreplied threads (Waiting On)│
+  Stream)              └────────────────────────────────────────────────┘
+                                │
+                    ┌───────────┼───────────┐
+                    ▼           ▼           ▼
+             Needs Reply   Waiting On   (no label)
+             applied       applied       → archive
+```
+
+**Why filters run first:** Gmail XML filters are free, instant, and handle pure signal-vs-noise decisions that don't require AI judgment. An email from delta.com with "sale" in the subject is always a Deal — no intelligence needed. By eliminating that volume before the AI runs, Gemini Flow only processes the small, high-quality set of emails that actually warrant classification.
+
+---
+
+## The label taxonomy
+
+Labels split into two categories based on who applies them and what they represent.
 
 ### Automated labels (nouns) — *what the email IS*
 
-Nouns describe categories of content. They are assigned by filters, require no human judgment, and skip the inbox entirely.
+Applied by Gmail filters. Skip the inbox. You consult them when you need to, not reactively.
 
-| Label | What it is |
-|-------|-----------|
-| **Deals** | Promotional mail. Discounts, offers, sale events from retailers, travel, food delivery. |
-| **Logistics** | Transactional mail. Receipts, order confirmations, shipping tracking, 2FA codes, invoices, billing statements. |
-| **Insights** | Editorial mail. Newsletters, research, industry media, thought leadership. Things you read when you have capacity — not things that block anyone. |
-| **Careers** | Professional advancement mail. Job alerts, application updates, certification notices, recruiter outreach from job boards. |
+| Label | Logic | What's in it | When you open it |
+|-------|-------|-------------|-----------------|
+| **Deals** | Domain + keyword | Promotional mail from known retail, travel, food, and entertainment brands | When you want a discount code or travel offer |
+| **Logistics** | Keyword only | Receipts, order confirmations, shipping tracking, 2FA codes, invoices, billing statements | When you need a receipt, tracking number, or verification code |
+| **Insights** | Domain only | Newsletters and research from editorial publishers — TechCrunch, McKinsey, HBR, Wired | When you have time to read and want industry context |
+| **Careers** | Domain + keyword | Job alerts, application updates, certification notices from job boards and ATS platforms | When you're actively job searching or tracking credentials |
+| **Stream** | Domain only | All operational tool notifications — GitHub, Slack, Notion, Figma, Linear, Zoom, Asana, etc. | Once daily, as a feed — not reactively |
 
-Nouns are passive. Nothing in the noun labels requires you to act *now*. They are reference material, not a task queue.
+### Action labels (verbs) — *what you need to DO*
 
-### Manual labels (verbs) — *what you need to DO*
+Applied by Gemini Flow (AI) or manually. These are your active work queue.
 
-Verbs describe actions. They are applied by you, manually, to emails that need something from you. They live in the top panels of your inbox.
+| Label | Applied by | Trigger | Exit condition |
+|-------|-----------|---------|---------------|
+| **Needs Reply** | Gemini Flow | Email arrives in inbox; AI determines it requires a response | You reply → archive |
+| **Waiting On** | Gemini Flow (scheduled) | You sent an email; no reply received after 4 days | Reply arrives → label auto-removed, thread archived |
+| **To Read** | You, manually | You see any email (in inbox or any label) and decide it's worth focused reading time | You read it → archive |
 
-| Label | What it means |
-|-------|--------------|
-| **Needs Reply** | You owe someone a response. The ball is in your court. |
-| **Waiting On** | You sent something and are blocked on their response. You are tracking it. |
-| **To Read** | Long-form content you've chosen to save — not auto-routed, manually curated. |
-
-Verbs are active. They represent open loops you are tracking.
-
-**Why this split matters:** When everything in your inbox is verb-labeled, every item has a clear next action. When noun-labeled mail is archived automatically, you never have to decide what to do with it in the moment — you consult it when you need it.
+**Why nouns for automated, verbs for action:**
+Noun labels answer *what is this?* — a question that can be answered by rules.
+Verb labels answer *what do I do?* — a question that requires judgment.
+Rules handle nouns. AI handles verbs. You handle nothing that shouldn't need you.
 
 ---
 
 ## The filter decision tree
 
-Every incoming email runs through this logic. Filters are evaluated in order; an email can match multiple filters and receive multiple labels.
-
 ```
 Incoming email
 │
-├── Does it come from a known deal/promo sender?
-│   AND does it contain promotional keywords?
-│   └── YES → label:Deals, skip inbox
+├─ FROM: known retail/travel/food/entertainment domain?
+│  AND CONTAINS: promotional keyword (sale, discount, coupon, etc.)?
+│  └─ YES → label:Deals, skip inbox
 │
-├── Does it contain transactional keywords?
-│   (receipt, shipped, tracking number, 2FA code, invoice, etc.)
-│   └── YES → label:Logistics, skip inbox
+├─ CONTAINS: transactional keyword?
+│  (receipt, shipped, invoice, 2FA code, tracking number, bill due, etc.)
+│  └─ YES → label:Logistics, skip inbox
 │
-├── Does it come from a known editorial/newsletter domain?
-│   └── YES → label:Insights, skip inbox
+├─ FROM: known editorial publisher or research firm?
+│  (TechCrunch, McKinsey, HBR, Wired, CBInsights, etc.)
+│  └─ YES → label:Insights, skip inbox
 │
-├── Does it come from a job board/ATS platform?
-│   AND does it contain job-specific keywords?
-│   └── YES → label:Careers, skip inbox
+├─ FROM: known job board or ATS platform?
+│  AND CONTAINS: job-specific keyword?
+│  (job alert, application received, viewed your resume, etc.)
+│  └─ YES → label:Careers, skip inbox
 │
-└── None of the above → hits your inbox (the triage zone)
-    │
-    ├── Noise/junk? → Delete or unsubscribe
-    ├── Quick response (< 2 min)? → Reply immediately → archive (no label)
-    ├── Needs real work (> 2 min)? → apply label:Needs Reply → archive
-    ├── Sent something, waiting for reply? → find it in Sent → apply label:Waiting On → archive
-    └── Long-form to read later? → apply label:To Read → archive
+├─ FROM: known operational tool domain?
+│  (GitHub, Slack, Notion, Figma, Linear, Zoom, Asana, etc.)
+│  └─ YES → label:Stream, skip inbox
+│
+└─ None of the above → hits raw inbox
+   │
+   ├─ Gemini Flow reads it
+   │  ├─ Requires response? → apply label:Needs Reply
+   │  └─ Informational / no action? → archive (no label)
+   │
+   └─ You see it in inbox
+      └─ Worth reading later? → apply label:To Read manually
 ```
 
-### Why some filters use BOTH domain + keyword (AND logic)
+---
 
-Gmail filter logic: when `from` AND `hasTheWords` are both specified, **both must match**. This is intentional for two filters:
+## Filter design decisions
 
-**Deals uses AND because:** Amazon, Best Buy, and Target also send order confirmations. Without the keyword gate, a shipping notification from amazon.com would be mislabeled as a Deal. With AND logic: promotional email from Amazon → Deals. Shipping confirmation from Amazon → Logistics (caught by keyword filter). Clean separation.
+### Why Deals AND Logistics can both catch Amazon
 
-**Careers uses AND because:** LinkedIn also sends connection requests, profile view alerts, and "people you may know" nudges. Without the keyword gate, those would all be labeled Careers. With AND logic: only job alerts and application updates from LinkedIn hit the Careers label. Social activity from LinkedIn reaches the inbox or is handled separately.
+Amazon sends promotional emails ("20% off your next order") AND transactional emails (order confirmations, shipping updates). Because the Deals filter requires **both** the Amazon domain AND a promotional keyword, a shipping confirmation from Amazon doesn't match Deals — it has no promotional keyword. It falls through to Logistics instead, where "tracking number" or "your order has been received" catches it.
 
-### Why Insights uses domain-only (no keyword gate)
+Result: Amazon promotional email → Deals. Amazon shipping notification → Logistics. Clean separation.
 
-The domains in Insights are pure editorial senders — HBR, McKinsey, TechCrunch, Wired, Product Hunt. These publishers **only** send newsletter content; they do not send you task assignments or things that require a response. A keyword gate would be redundant and would cause misses when the newsletter subject line doesn't contain any predictable keyword.
+### Why Careers uses domain + keyword (AND logic)
 
-### Why Logistics uses keyword-only (no domain gate)
+LinkedIn also sends connection requests, profile view alerts, and "people you may know" suggestions. Without the keyword gate, all of those would land in Careers. With AND logic: only emails from LinkedIn that contain "job alert," "application received," "recruiter is interested," etc. hit Careers. Everything else from LinkedIn hits the inbox.
 
-Transactional mail arrives from thousands of different domains. Your bank, your dentist, your landlord, your insurance carrier, random e-commerce vendors. You cannot enumerate them all. The content is the signal — "receipt," "invoice," "tracking number," "your package" — regardless of who sent it.
+### Why Logistics is keyword-only (no domain list)
+
+Transactional email arrives from thousands of different senders — your bank, dentist, insurance carrier, random e-commerce vendors, local restaurants. You cannot enumerate them. The content is the reliable signal: "receipt," "invoice," "tracking number" appear regardless of who sent it.
+
+### Why Stream uses domain-only (no keyword gate)
+
+Tool notifications from GitHub, Slack, Notion, etc. are all signal-adjacent but high-volume. A keyword gate would require maintaining a list of every notification pattern across every tool — an unmaintainable whitelist. Domain-only routing routes all tool volume to Stream, where you check it as a feed once a day rather than having 30 comment notifications interrupt your triage flow.
+
+**The trade-off:** A direct PR review request from GitHub goes to Stream rather than the inbox. In a personal inbox context (not a work email), the cost of a few-hour delay is acceptable. The benefit is a permanently cleaner inbox that the AI can process with higher quality signal.
+
+### Why Insights excludes operational tool domains
+
+Operational tools like GitHub, Slack, Figma, and Notion also publish newsletters and changelogs. But they also send task assignments, @mentions, PR requests, and comment notifications that require action. Routing all GitHub mail to Insights would silently archive those action items. Instead:
+- GitHub notifications → Stream (all tool notifications, checked as a feed)
+- TechCrunch, Wired, McKinsey → Insights (pure editorial publishers who never send action-requiring mail)
+
+The rule: **if the domain could ever send you something that blocks someone else, it does not belong in Insights.**
 
 ---
 
-## The four automated filters in detail
+## Gmail settings
 
-### Deals
-
-**Logic:** Domain AND keyword required (both must match)
-
-**What gets caught:** Promotional campaigns, sale announcements, discount codes, limited-time offers from known retail, travel, food delivery, and entertainment brands.
-
-**What doesn't get caught:** Transactional mail from the same senders (order confirmations, shipping updates). These route to Logistics instead.
-
-**When to check it:** When you want to find a discount code before buying something, or when you're planning travel and want to see what offers have come in.
-
-**When to add a domain:** When you start getting promotional mail from a new sender you didn't have before (new subscription box, new airline, new streaming service).
-
----
-
-### Logistics
-
-**Logic:** Keyword-only, no domain list
-
-**What gets caught:** Order confirmations, shipping notifications, delivery updates, invoices, billing statements, 2FA codes, one-time passwords, sign-in alerts, password resets, payment receipts.
-
-**What doesn't get caught:** Mail with no transactional keywords. If a company sends you a non-transactional email (like a newsletter from a service you use), it may hit the inbox or be caught by Insights.
-
-**When to check it:** When you need to find a tracking number, a receipt, a verification code, or a payment confirmation.
-
-**Known tradeoff:** `"charge"` was intentionally excluded from the keyword list. The word "charge" appears in too many non-transactional contexts (charging documents, charge of leadership, etc.) and creates false positives. Specific payment phrases like "payment received" and "payment successful" cover the real use case with less noise.
-
----
-
-### Insights
-
-**Logic:** Domain-only, no keyword gate
-
-**What gets caught:** Newsletters, research reports, trend pieces, product launch announcements from pure editorial sources.
-
-**What doesn't get caught (intentionally):** Mail from operational tools like GitHub, Slack, Zoom, Notion, Figma, Linear, Asana, ClickUp, Monday.com, Salesforce. These tools send task assignments, PR review requests, meeting invites, and direct messages. **Archiving those would cause you to miss action items.** They are explicitly excluded.
-
-**When to check it:** During scheduled reading time — not reactively. This is the one label where you set aside time to consume rather than respond.
-
-**When to add a domain:** When you subscribe to a new newsletter or research service that you want to read on your own schedule rather than have it interrupt your triage flow.
-
----
-
-### Careers
-
-**Logic:** Domain AND keyword required (both must match)
-
-**What gets caught:** Job alerts, application status updates, credential and certification notices, recruiter outreach — but only when it comes from a known job platform.
-
-**What doesn't get caught:** A LinkedIn connection request (domain matches, but no job keyword). A recruiter emailing you directly from a company domain (not a known job board domain). These reach the inbox.
-
-**When to check it:** When you're actively job searching or tracking certifications. When you're not, you can ignore it entirely.
-
----
-
-## Filter quality checklist
-
-Before adding a domain or keyword to any filter, ask:
-
-| Question | If YES | If NO |
-|----------|--------|-------|
-| Could this sender ever email you something that requires action? | Do NOT add to Insights or use domain-only | Safe to route automatically |
-| Is this a domain that sends both promotional AND transactional mail? | Use domain + keyword (AND logic) for Deals | Domain-only is fine |
-| Is the keyword too common to be a reliable signal? | Don't add it | Add it |
-| Does the sender use a different domain for marketing vs. transactional? | Add both domains to appropriate filters | One domain is enough |
-
----
-
-## Gmail settings to pair with these filters
-
-These settings make the system work. Without them, Gmail's own algorithms will override your filters.
+These settings complete the system. Without them, Gmail's own algorithms will partially override your filters.
 
 | Setting | Value | Why |
 |---------|-------|-----|
-| Inbox type | Multiple Inboxes | Separates verb-labeled emails into persistent top panels |
-| Multiple Inbox position | Above the inbox | Action items (verbs) are always visible above the triage zone |
-| Filtered mail override | Don't override filters | Stops Gmail's importance algorithm from re-routing your filter output |
+| Inbox type | Multiple Inboxes | Keeps action labels visible as persistent top panels |
+| Multiple Inbox position | Above the inbox | Needs Reply and Waiting On are always visible above the triage zone |
+| Filtered mail override | Don't override filters | Prevents Gmail's importance algorithm from re-routing filter output |
 | Importance markers | No markers | Disables Gmail's automated "important" guessing |
-| Auto-advance | On | After archiving, opens next email — no context-switch back to list |
-| Conversation view | On | Keeps full thread history in one block |
+| Auto-advance | On | After archiving, opens next email — no context switch back to list |
+| Conversation view | On | Full thread history in one block |
 
 **Multiple Inbox panel configuration:**
 
-| Panel | Search query | Label name |
-|-------|-------------|------------|
+| Panel | Search query | Display name |
+|-------|-------------|-------------|
 | Section 1 | `label:needs-reply` | Action Required |
-| Section 2 | `label:waiting-on` | Blocked / Waiting |
+| Section 2 | `label:waiting-on` | Waiting On |
 | Section 3 | `label:to-read` | Reading List |
 
 ---
@@ -202,16 +185,14 @@ These settings make the system work. Without them, Gmail's own algorithms will o
 # 1. Install the one dependency
 pip install pyyaml
 
-# 2. Edit any filter in ./filters/*.yaml
-
-# 3. Generate and validate
+# 2. Generate mailFilters.xml from the YAML filter definitions
 python generate.py
 
-# 4. Preview without writing (optional)
+# 3. Preview without writing (optional)
 python generate.py --dry-run
 
-# 5. Import mailFilters.xml into Gmail
-# Gmail → Settings → See all settings → Filters and Blocked Addresses
+# 4. Import into Gmail
+# Settings → See all settings → Filters and Blocked Addresses
 # → Import filters → upload mailFilters.xml → Create filters
 ```
 
@@ -219,22 +200,23 @@ python generate.py --dry-run
 
 ## Adding or editing filters
 
-### Add a domain to an existing filter
-
-Open the YAML file, add the domain, run the generator:
+### Add a domain to an existing label
 
 ```yaml
 # filters/deals.yaml
 from_domains:
   - delta.com
-  - mynewairline.com   # ← add it here
+  - mynewairline.com   # ← add here, run generate.py
 ```
 
-```bash
-python generate.py
-```
+### Add a new tool to Stream
 
-Then re-import `mailFilters.xml` into Gmail. Gmail will not duplicate existing filters on import — it adds new ones.
+```yaml
+# filters/stream.yaml
+from_domains:
+  - github.com
+  - newprojecttool.com   # ← add here
+```
 
 ### Add a new filter category
 
@@ -248,43 +230,39 @@ archive: true
 from_domains:
   - chase.com
   - fidelity.com
-  - vanguard.com
-  - schwab.com
 
 has_words:
   - "statement"
-  - "balance available"
   - "transaction alert"
+  - "balance available"
 ```
 
-Run `python generate.py`. The new label will be created in Gmail on import.
+Run `python generate.py`. The label is created in Gmail on import.
 
-### YAML schema reference
+### YAML schema
 
 ```yaml
-label: string        # Gmail label name — created automatically on import
+label: string        # Gmail label name — created on import if it doesn't exist
 archive: bool        # true = skip inbox (default: true)
 
 from_domains:        # optional — space-joined, auto-split if > 480 chars
   - example.com
 
-has_words:           # optional — OR-joined; multi-word phrases quoted automatically
-  - "exact phrase"   # becomes: "exact phrase"
-  - singleword       # becomes: singleword (no quotes)
+has_words:           # optional — OR-joined; multi-word phrases auto-quoted
+  - "exact phrase"   # → "exact phrase" in output
+  - singleword       # → singleword in output (no quotes)
 ```
 
-At least one of `from_domains` or `has_words` is required per filter.
-
-**AND vs OR behavior:**
-- Both `from_domains` AND `has_words` present → Gmail requires **both** to match
-- Only `from_domains` → any email from those domains is caught
-- Only `has_words` → any email containing those words is caught, regardless of sender
+**Filter matching behavior:**
+- Both `from_domains` + `has_words` → Gmail requires **both** to match (AND)
+- `from_domains` only → any email from those domains is caught
+- `has_words` only → any email with those words is caught, any sender
 
 ---
 
-## CI/CD: auto-regenerate on push
+## Auto-regenerate on push
 
-`.github/workflows/generate.yml` runs `generate.py` automatically whenever `filters/` or `generate.py` changes on `main`. The committed `mailFilters.xml` always reflects the current YAML — no manual re-generation needed after a push.
+`.github/workflows/generate.yml` runs `generate.py` on every push that touches `filters/` or `generate.py`. The committed `mailFilters.xml` stays in sync automatically. You never manually regenerate after committing a YAML edit.
 
 ---
 
@@ -293,11 +271,12 @@ At least one of `from_domains` or `has_words` is required per filter.
 ```
 signalbox/
 ├── filters/
-│   ├── deals.yaml       # Promotional mail — domain + keyword
+│   ├── deals.yaml       # Promotional mail — domain + keyword (AND)
 │   ├── logistics.yaml   # Transactional mail — keyword only
 │   ├── insights.yaml    # Editorial mail — domain only
-│   └── careers.yaml     # Job board mail — domain + keyword
-├── generate.py          # Reads YAML → builds valid Gmail XML
+│   ├── careers.yaml     # Job board mail — domain + keyword (AND)
+│   └── stream.yaml      # Operational tool notifications — domain only
+├── generate.py          # Reads YAML → builds valid Gmail XML via ElementTree
 ├── mailFilters.xml      # Generated output — import this into Gmail
 ├── requirements.txt     # pyyaml
 └── .github/

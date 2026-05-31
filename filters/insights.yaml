@@ -29,7 +29,6 @@ from_domains:
   - crunchbase.com
   - insider.com
   # Marketing & Growth newsletters
-  - hubspot.com
   - marketingbrew.com
   - digiday.com
   - adweek.com
