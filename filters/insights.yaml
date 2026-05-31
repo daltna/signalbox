@@ -1,0 +1,47 @@
+# Insights: newsletters, industry media, SaaS tools, research firms.
+# Pure domain-based routing — if the sender is here, it's Insights regardless of content.
+# No has_words needed: these domains only send editorial/product content.
+
+label: Insights
+archive: true
+
+from_domains:
+  # AI & Tech
+  - openai.com
+  - producthunt.com
+  - techcrunch.com
+  - venturebeat.com
+  - wired.com
+  - fastcompany.com
+  - techtarget.com
+  # Business & Research
+  - hbr.org
+  - mckinsey.com
+  - gartner.com
+  - cbinsights.com
+  - crunchbase.com
+  - insider.com
+  # Marketing & Growth
+  - hubspot.com
+  - marketingbrew.com
+  - digiday.com
+  - adweek.com
+  - semrush.com
+  - mailchimp.com
+  - convertkit.com
+  # Dev & Product Tools
+  - github.com
+  - linear.app
+  - notion.so
+  - figma.com
+  - canva.com
+  - miro.com
+  # Productivity & Collaboration
+  - slack.com
+  - zoom.us
+  - asana.com
+  - clickup.com
+  - monday.com
+  - salesforce.com
+  # Publishing
+  - medium.com

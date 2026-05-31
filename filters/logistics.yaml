@@ -1,0 +1,33 @@
+# Logistics: transactional mail. Receipts, shipping, auth codes, billing.
+# No from_domains — keyword matching alone is sufficient for this category.
+# These emails arrive from thousands of different domains; content is the signal.
+
+label: Logistics
+archive: true
+
+has_words:
+  - "receipt"
+  - "order confirmation"
+  - "security code"
+  - "verification code"
+  - "two-factor"
+  - "one-time password"
+  - "tracking number"
+  - "shipped"
+  - "delivered"
+  - "invoice"
+  - "statement is ready"
+  - "payment received"
+  - "bill due"
+  - "auto-renew"
+  - "fedex"
+  - "usps"
+  - "dhl"
+  - "transaction id"
+  - "your account statement"
+  - "sign-in alert"
+  - "password reset"
+  - "payment successful"
+  - "order has been received"
+  - "your package"
+  - "confirmation number"

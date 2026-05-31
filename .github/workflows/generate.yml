@@ -1,0 +1,40 @@
+name: Generate mailFilters.xml
+
+on:
+  push:
+    paths:
+      - "filters/**"
+      - "generate.py"
+  pull_request:
+    paths:
+      - "filters/**"
+      - "generate.py"
+  workflow_dispatch:
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      - name: Generate mailFilters.xml
+        run: python generate.py
+
+      - name: Validate output exists and is non-empty
+        run: |
+          test -s mailFilters.xml || (echo "mailFilters.xml is missing or empty" && exit 1)
+
+      - name: Commit updated mailFilters.xml
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: regenerate mailFilters.xml"
+          file_pattern: mailFilters.xml

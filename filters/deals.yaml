@@ -1,0 +1,79 @@
+# Deals: promotional mail from retail, travel, food delivery, and entertainment.
+# Gmail auto-archives these — visible under the Deals label, not the inbox.
+#
+# Add any domain you want silenced here. OR keyword is injected by generate.py.
+# from_domains is auto-split into multiple filters if it exceeds Gmail's 500-char limit.
+
+label: Deals
+archive: true
+
+from_domains:
+  # Travel & Hospitality
+  - delta.com
+  - united.com
+  - aa.com
+  - southwest.com
+  - jetblue.com
+  - alaskaair.com
+  - marriott.com
+  - hilton.com
+  - airbnb.com
+  - expedia.com
+  - booking.com
+  # Food Delivery
+  - doordash.com
+  - uber.com
+  - grubhub.com
+  - postmates.com
+  - instacart.com
+  # Big Box Retail
+  - target.com
+  - walmart.com
+  - costco.com
+  - amazon.com
+  - bestbuy.com
+  - apple.com
+  - homedepot.com
+  - lowes.com
+  - ebay.com
+  # Fashion & Beauty
+  - nike.com
+  - adidas.com
+  - gap.com
+  - jcrew.com
+  - nordstrom.com
+  - sephora.com
+  - ulta.com
+  - hm.com
+  - zara.com
+  - macys.com
+  # Home
+  - wayfair.com
+  - ikea.com
+  # Entertainment & Subscriptions
+  - netflix.com
+  - hulu.com
+  - disneyplus.com
+  - spotify.com
+  # Telecom
+  - t-mobile.com
+  - verizon.com
+  - att.com
+  # Events & Tickets
+  - ticketmaster.com
+  - stubhub.com
+
+has_words:
+  - "unsubscribe"
+  - "view in browser"
+  - "opt out"
+  - "sale"
+  - "coupon"
+  - "discount"
+  - "promo code"
+  - "limited time"
+  - "special offer"
+  - "shop now"
+  - "off your next"
+  - "free shipping"
+  - "deal of the day"
