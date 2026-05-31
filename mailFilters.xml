@@ -1,81 +1,224 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom" xmlns:apps="http://schemas.google.com/apps/2006">
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns='http://www.w3.org/2005/Atom' xmlns:apps='http://schemas.google.com/apps/2006'>
   <title>Mail Filters</title>
   <id>tag:mail.google.com,2008:filters:</id>
-  <updated>2026-01-01T00:00:00Z</updated>
+  <updated>2026-05-31T18:23:25Z</updated>
+
+  <!-- ============================================================ -->
+  <!-- CAREERS                                                       -->
+  <!-- Job boards, ATS platforms, professional development          -->
+  <!-- ============================================================ -->
+
   <entry>
-    <category term="filter" />
+    <category term="filter"/>
     <title>Mail Filter</title>
     <id>tag:mail.google.com,2008:filter:1500000000001</id>
     <updated>2026-01-01T00:00:00Z</updated>
-    <apps:property name="from" value="welcometothejungle.com linkedin.com indeed.com ziprecruiter.com glassdoor.com monster.com workday.com greenhouse.io lever.co taleo.net handshake.com simplyhired.com dice.com builtin.com" />
-    <apps:property name="hasTheWords" value="job alert OR new job OR recommended jobs OR matches your search OR application received OR viewed your resume OR application update OR recruiter is interested OR job opening OR career opportunity OR hiring" />
-    <apps:property name="label" value="Careers" />
-    <apps:property name="shouldArchive" value="true" />
+    <apps:property name="from" value="welcometothejungle.com linkedin.com indeed.com ziprecruiter.com glassdoor.com monster.com workday.com greenhouse.io lever.co taleo.net handshake.com simplyhired.com dice.com builtin.com"/>
+    <apps:property name="label" value="Careers"/>
+    <apps:property name="shouldMarkAsRead" value="true"/>
+    <apps:property name="shouldArchive" value="true"/>
   </entry>
+
   <entry>
-    <category term="filter" />
+    <category term="filter"/>
     <title>Mail Filter</title>
     <id>tag:mail.google.com,2008:filter:1500000000007</id>
     <updated>2026-01-01T00:00:00Z</updated>
-    <apps:property name="from" value="coursera.org udemy.com pluralsight.com linkedin.com theinstitutes.org pmi.org shrm.org comptia.org isaca.org skillshare.com udacity.com" />
-    <apps:property name="hasTheWords" value="certification OR credential OR exam OR continuing education OR professional development OR career advice OR career fair OR career growth OR industry event OR salary report OR leadership program OR course completion" />
-    <apps:property name="label" value="Careers" />
-    <apps:property name="shouldArchive" value="true" />
+    <apps:property name="from" value="coursera.org udemy.com pluralsight.com linkedin.com theinstitutes.org pmi.org shrm.org comptia.org isaca.org skillshare.com udacity.com"/>
+    <apps:property name="hasTheWord" value="certification OR credential OR exam OR continuing education OR professional development OR career advice OR career fair OR career growth OR industry event OR salary report OR leadership program OR course completion"/>
+    <apps:property name="label" value="Careers"/>
+    <apps:property name="shouldMarkAsRead" value="true"/>
+    <apps:property name="shouldArchive" value="true"/>
   </entry>
+
   <entry>
-    <category term="filter" />
+    <category term="filter"/>
+    <title>Mail Filter</title>
+    <id>tag:mail.google.com,2008:filter:1500000000009</id>
+    <updated>2026-01-01T00:00:00Z</updated>
+    <apps:property name="from" value="jobalerts-noreply@linkedin.com OR jobs-noreply@linkedin.com OR inmail-hit-reply@linkedin.com OR hit-reply@linkedin.com OR support@builtin.com OR editors-noreply@linkedin.com OR notifications-noreply@linkedin.com OR jobs-listings@linkedin.com OR billing-noreply@linkedin.com OR security-noreply@linkedin.com OR team@hi.wellfound.com OR no-reply@ashbyhq.com OR help@welcometothejungle.com OR joinus@jonusgroup.com OR usr-jhSIMzhD6Fd3eOK@user.luma-mail.com"/>
+    <apps:property name="label" value="Careers"/>
+    <apps:property name="shouldMarkAsRead" value="true"/>
+    <apps:property name="shouldArchive" value="true"/>
+  </entry>
+
+  <!-- ============================================================ -->
+  <!-- DEALS                                                         -->
+  <!-- Brand emails — retail, travel, food, entertainment           -->
+  <!-- ============================================================ -->
+
+  <entry>
+    <category term="filter"/>
     <title>Mail Filter</title>
     <id>tag:mail.google.com,2008:filter:1500000000002</id>
     <updated>2026-01-01T00:00:00Z</updated>
-    <apps:property name="from" value="delta.com united.com aa.com southwest.com jetblue.com alaskaair.com marriott.com hilton.com airbnb.com expedia.com booking.com doordash.com uber.com grubhub.com postmates.com instacart.com target.com walmart.com costco.com amazon.com bestbuy.com apple.com homedepot.com lowes.com ebay.com nike.com adidas.com gap.com jcrew.com nordstrom.com sephora.com ulta.com hm.com zara.com macys.com wayfair.com ikea.com netflix.com hulu.com disneyplus.com spotify.com t-mobile.com" />
-    <apps:property name="label" value="Deals" />
-    <apps:property name="shouldArchive" value="true" />
+    <apps:property name="from" value="delta.com united.com aa.com southwest.com jetblue.com alaskaair.com marriott.com hilton.com airbnb.com expedia.com booking.com doordash.com uber.com grubhub.com postmates.com instacart.com target.com walmart.com costco.com amazon.com bestbuy.com apple.com homedepot.com lowes.com ebay.com nike.com adidas.com gap.com jcrew.com nordstrom.com sephora.com ulta.com hm.com zara.com macys.com wayfair.com ikea.com netflix.com hulu.com disneyplus.com spotify.com t-mobile.com wise.com"/>
+    <apps:property name="label" value="Deals"/>
+    <apps:property name="shouldArchive" value="true"/>
   </entry>
+
   <entry>
-    <category term="filter" />
+    <category term="filter"/>
     <title>Mail Filter</title>
     <id>tag:mail.google.com,2008:filter:1500000000003</id>
     <updated>2026-01-01T00:00:00Z</updated>
-    <apps:property name="from" value="verizon.com att.com ticketmaster.com stubhub.com" />
-    <apps:property name="label" value="Deals" />
-    <apps:property name="shouldArchive" value="true" />
+    <apps:property name="from" value="verizon.com att.com ticketmaster.com stubhub.com"/>
+    <apps:property name="label" value="Deals"/>
+    <apps:property name="shouldArchive" value="true"/>
   </entry>
+
   <entry>
-    <category term="filter" />
+    <category term="filter"/>
+    <title>Mail Filter</title>
+    <id>tag:mail.google.com,2008:filter:1500000000010</id>
+    <updated>2026-01-01T00:00:00Z</updated>
+    <apps:property name="from" value="gap@email.gap.com OR bananarepublic@email.bananarepublic.com OR no-reply@doordash.com OR shop@emails.macys.com OR yo@banditrunning.com OR no-reply@em.macys.com OR CustomerService@oes.macys.com OR no-reply@legal.spotify.com OR nest@ekster.com OR info@elsewhere.club OR news@mail.we-vibe.com OR noreply@info.wise.com OR noreply@criefffamilyhotels.com OR store-news@amazon.com OR capitalone@message.capitalone.com OR marketing@plans.eventbrite.com OR email@a.grubhub.com OR marketing@engage.canva.com OR ConEdison@email.coned.com OR run@ultimatedirection.com OR no-reply@spotify.com OR blink@hello.blink.com OR support@everlane.com OR info@greatsbrand.com OR hello@backstroke.com OR underarmour@emails.underarmour.com OR hello@mail.grammarly.com OR team@ohhey.depop.com OR worldofhyatt@loyalty.hyatt.com OR venmo@email.venmo.com OR info@housepickleball.com OR james@kinkstore.com OR news-us@news.barcelo.com OR info@goodroombk.com OR marketing@federato.ai OR info@streetfc.com OR hi@www.mattober.co OR max@nostatic.live OR announcements@figma.com"/>
+    <apps:property name="label" value="Deals"/>
+    <apps:property name="shouldMarkAsRead" value="true"/>
+    <apps:property name="shouldArchive" value="true"/>
+  </entry>
+
+  <entry>
+    <category term="filter"/>
+    <title>Mail Filter</title>
+    <id>tag:mail.google.com,2008:filter:1500000000011</id>
+    <updated>2026-01-01T00:00:00Z</updated>
+    <apps:property name="from" value="googleaistudio-noreply@google.com OR replytoinstructor@recess.tv OR enews@email.nypl.org OR event@email.eventbrite.com OR deals@email.alaskaair.com OR samsung@innovations.samsungusa.com OR info@members.netflix.com OR hi@betteroffsocial.com OR product@engage.canva.com OR info@rafaelsbarbershop.com OR help@kinkstore.com OR googleworkspace-noreply@google.com OR reviews@yotpo.com OR reply@br.nbcsports.com OR schomburgsociety@email.nypl.org OR nycfc@pigeonmail.nycfc.com OR njtmarketing@njtransit.com OR cvs@your.cvs.com OR marketplace-messages@amazon.com OR noreply@send.belkin.com OR DSG@e.dcsg.com OR email@e.nyrrmailing.org OR no-reply@rs.email.nextdoor.com OR wholefoodsmarket@mail.wholefoodsmarket.com OR no_reply@mcmap.chase.com OR gigs@mailer.dice.fm OR PatientNews@nychhc.org OR no-reply@is.email.nextdoor.com OR fabrizio@typefully.com OR marketing@brooklynbedding.com OR noreply@shop.app OR no-reply@marketing.base44.com OR robots@dbrand.com OR newsletter@terramare.com"/>
+    <apps:property name="label" value="Deals"/>
+    <apps:property name="shouldMarkAsRead" value="true"/>
+    <apps:property name="shouldArchive" value="true"/>
+  </entry>
+
+  <entry>
+    <category term="filter"/>
+    <title>Mail Filter</title>
+    <id>tag:mail.google.com,2008:filter:1500000000012</id>
+    <updated>2026-01-01T00:00:00Z</updated>
+    <apps:property name="from" value="reply@br.nbcsports.com OR nycfc@pigeonmail.nycfc.com OR schomburgsociety@email.nypl.org OR njtmarketing@njtransit.com OR community@figma.com OR noreply@send.belkin.com OR comedy@comedycellar.com OR news@simplehuman.com OR product@mail.descript.com OR googleflow-noreply@google.com OR studioxbjj@gmail.com OR friends@email.nypl.org OR canvacreate@engage.canva.com OR NETGEAR@email.netgear.com OR recommendations@discover.pinterest.com OR contact@mail.replit.com OR product@email.neon.tech OR donotreply@bankmessage.capitalone.com OR google-maps-noreply@google.com OR noreply@dice.fm OR shop@em.macys.com OR care@we-vibe.com OR hello@mermaid.ai OR sejalagrawal@xwf.google.com OR noreply@email.amctheatres.com OR CloudPlatform-noreply@google.com OR linkedin@em.linkedin.com OR noreply@e.nyrrmailing.org OR noreply@email.openai.com OR noreply@lovable.dev OR support@brooklynbedding.com OR replyto@recess.tv OR no-reply@msg.amazonmusic.com OR welcome@engage.canva.com OR noreply-maps-timeline@google.com OR no-reply@messages.doordash.com OR info@account.netflix.com OR googledev-noreply@google.com OR info@ticketweb.com"/>
+    <apps:property name="label" value="Deals"/>
+    <apps:property name="shouldMarkAsRead" value="true"/>
+    <apps:property name="shouldArchive" value="true"/>
+  </entry>
+
+  <!-- ============================================================ -->
+  <!-- INSIGHTS                                                      -->
+  <!-- Editorial publishers, research, industry content             -->
+  <!-- ============================================================ -->
+
+  <entry>
+    <category term="filter"/>
     <title>Mail Filter</title>
     <id>tag:mail.google.com,2008:filter:1500000000004</id>
     <updated>2026-01-01T00:00:00Z</updated>
-    <apps:property name="from" value="openai.com producthunt.com techcrunch.com venturebeat.com wired.com fastcompany.com techtarget.com hbr.org mckinsey.com gartner.com cbinsights.com crunchbase.com insider.com marketingbrew.com digiday.com adweek.com semrush.com medium.com" />
-    <apps:property name="label" value="Insights" />
-    <apps:property name="shouldArchive" value="true" />
+    <apps:property name="from" value="openai.com producthunt.com techcrunch.com venturebeat.com wired.com fastcompany.com techtarget.com hbr.org mckinsey.com gartner.com cbinsights.com crunchbase.com insider.com marketingbrew.com digiday.com adweek.com semrush.com medium.com"/>
+    <apps:property name="label" value="Insights"/>
+    <apps:property name="shouldArchive" value="true"/>
   </entry>
+
   <entry>
-    <category term="filter" />
+    <category term="filter"/>
+    <title>Mail Filter</title>
+    <id>tag:mail.google.com,2008:filter:1500000000013</id>
+    <updated>2026-01-01T00:00:00Z</updated>
+    <apps:property name="from" value="team@ship.emergent.sh OR team@scoutinsur.tech OR marcom@riverside.fm OR raouf.chebri@mail.replit.com OR googlecloud@google.com"/>
+    <apps:property name="label" value="Insights"/>
+    <apps:property name="shouldMarkAsRead" value="true"/>
+    <apps:property name="shouldArchive" value="true"/>
+  </entry>
+
+  <!-- ============================================================ -->
+  <!-- LOGISTICS                                                     -->
+  <!-- Receipts, shipping, billing, 2FA, bookings, payments         -->
+  <!-- ============================================================ -->
+
+  <entry>
+    <category term="filter"/>
     <title>Mail Filter</title>
     <id>tag:mail.google.com,2008:filter:1500000000005</id>
     <updated>2026-01-01T00:00:00Z</updated>
-    <apps:property name="from" value="ups.com fedex.com usps.com dhl.com shoprunner.com amazon.com walmart.com ebay.com target.com bestbuy.com homedepot.com lowes.com" />
-    <apps:property name="hasTheWords" value="shipped OR delivered OR tracking OR out for delivery OR order confirmation OR your order OR delivery OR shipment OR package" />
-    <apps:property name="label" value="Logistics" />
-    <apps:property name="shouldArchive" value="true" />
+    <apps:property name="from" value="ups.com fedex.com usps.com dhl.com shoprunner.com amazon.com walmart.com ebay.com target.com bestbuy.com homedepot.com lowes.com"/>
+    <apps:property name="hasTheWord" value="shipped OR delivered OR tracking OR out for delivery OR order confirmation OR your order OR delivery OR shipment OR package"/>
+    <apps:property name="label" value="Logistics"/>
+    <apps:property name="shouldMarkAsRead" value="true"/>
+    <apps:property name="shouldArchive" value="true"/>
   </entry>
+
   <entry>
-    <category term="filter" />
+    <category term="filter"/>
     <title>Mail Filter</title>
     <id>tag:mail.google.com,2008:filter:1500000000008</id>
     <updated>2026-01-01T00:00:00Z</updated>
-    <apps:property name="hasTheWords" value="receipt OR invoice OR payment received OR payment successful OR bill due OR statement is ready OR your account statement OR transaction id OR verification code OR security code OR two-factor OR one-time password OR sign-in alert OR password reset OR confirmation number OR auto-renew" />
-    <apps:property name="label" value="Logistics" />
-    <apps:property name="shouldArchive" value="true" />
+    <apps:property name="hasTheWord" value="receipt OR invoice OR payment received OR payment successful OR bill due OR statement is ready OR your account statement OR transaction id OR verification code OR security code OR two-factor OR one-time password OR sign-in alert OR password reset OR confirmation number OR auto-renew"/>
+    <apps:property name="label" value="Logistics"/>
+    <apps:property name="shouldMarkAsRead" value="true"/>
+    <apps:property name="shouldArchive" value="true"/>
   </entry>
+
   <entry>
-    <category term="filter" />
+    <category term="filter"/>
+    <title>Mail Filter</title>
+    <id>tag:mail.google.com,2008:filter:1500000000014</id>
+    <updated>2026-01-01T00:00:00Z</updated>
+    <apps:property name="from" value="venmo@venmo.com OR noreply@billing.coned.com OR capitalone@notification.capitalone.com OR MyAccount@spectrumemails.com OR message@service.suitsupply.com OR hello@mercury.com OR team@mail.perplexity.ai OR no.reply.alerts@chase.com OR do-not-reply@ikea.com OR HomeDepot@order.homedepot.com OR workspacesupport@google.com OR no-reply@accounts.google.com OR service@m1.upliftdesk.com OR no-reply@alerts.spotify.com OR noreply@account.wise.com OR support@luma.com OR info@x.com OR orders@eat.grubhub.com OR verify@x.com OR notifications@link.com OR no.reply@order.email.ikea.com OR billing-noreply@linkedin.com OR no-reply@icims.com OR bdg3@futureproof.org OR ventaOnline@renfe.es OR noreply@identitymail.barcelo.com OR noreply@wise.com OR support@wise.com OR noreply@account.wise.com OR device-management-noreply@google.com OR notifications@calendly.com OR support@support.freetaxusa.com OR account@nvidia.com OR security-noreply@linkedin.com OR google-my-business-noreply@google.com OR CloudPlatform-noreply@google.com OR googledev-noreply@google.com OR info@ticketweb.com OR statement@email.alaskaair.com OR no-reply@notify.docker.com OR gemini-notes@google.com"/>
+    <apps:property name="label" value="Logistics"/>
+    <apps:property name="shouldMarkAsRead" value="true"/>
+    <apps:property name="shouldArchive" value="true"/>
+  </entry>
+
+  <entry>
+    <category term="filter"/>
+    <title>Mail Filter</title>
+    <id>tag:mail.google.com,2008:filter:1500000000015</id>
+    <updated>2026-01-01T00:00:00Z</updated>
+    <apps:property name="from" value="noreply+otp@brella.io OR upcoming-invoice+acct_1EVM9oJTFrdhVB7N@stripe.com OR noreply@quicken.com OR order-update@amazon.com OR shipment-tracking@amazon.com OR auto-confirm@amazon.com OR account-update@amazon.com OR no-reply@primevideo.com OR no.reply.alerts@chase.com OR mcinfo@ups.com OR the-messenger@mercury.com OR customer-reviews-messages@amazon.com OR no-reply@business.amazon.com OR reviews@stamped.io OR noreply@order.eventbrite.com OR no-reply@account.etsy.com OR no-reply@amazon.com OR support@transistor.fm OR reply@a.altrarunning.com OR pinterest-recommendations@ideas.pinterest.com OR no-reply@email.peacocktv.com OR payments-noreply@google.com OR no_reply@underarmour.narvar.com OR noreply@underarmour.com OR dadiosyhani@gmail.com OR donotreply@nipr.com OR portal@dfs.ny.gov OR no-reply@we-vibe.com"/>
+    <apps:property name="hasTheWord" value="delivered OR package OR shipped OR tracking OR out for delivery OR order confirmation"/>
+    <apps:property name="label" value="Logistics"/>
+    <apps:property name="shouldMarkAsRead" value="true"/>
+    <apps:property name="shouldArchive" value="true"/>
+  </entry>
+
+  <!-- ============================================================ -->
+  <!-- STREAM                                                        -->
+  <!-- Tool notifications — dev, productivity, scheduling           -->
+  <!-- ============================================================ -->
+
+  <entry>
+    <category term="filter"/>
     <title>Mail Filter</title>
     <id>tag:mail.google.com,2008:filter:1500000000006</id>
     <updated>2026-01-01T00:00:00Z</updated>
-    <apps:property name="from" value="github.com gitlab.com bitbucket.org vercel.com netlify.com render.com railway.app neon.tech supabase.com linear.app asana.com clickup.com monday.com trello.com basecamp.com figma.com canva.com notion.so miro.com airtable.com slack.com zoom.us loom.com calendly.com salesforce.com hubspot.com azure.com jira.atlassian.com confluence.atlassian.com" />
-    <apps:property name="label" value="Stream" />
-    <apps:property name="shouldArchive" value="true" />
+    <apps:property name="from" value="github.com gitlab.com bitbucket.org vercel.com netlify.com render.com railway.app neon.tech supabase.com linear.app asana.com clickup.com monday.com trello.com basecamp.com figma.com canva.com notion.so miro.com airtable.com slack.com zoom.us loom.com calendly.com salesforce.com hubspot.com azure.com jira.atlassian.com confluence.atlassian.com"/>
+    <apps:property name="label" value="Stream"/>
+    <apps:property name="shouldMarkAsRead" value="true"/>
+    <apps:property name="shouldArchive" value="true"/>
   </entry>
+
+  <entry>
+    <category term="filter"/>
+    <title>Mail Filter</title>
+    <id>tag:mail.google.com,2008:filter:1500000000016</id>
+    <updated>2026-01-01T00:00:00Z</updated>
+    <apps:property name="from" value="no-reply@todoist.com OR calendar-notification@google.com OR hello@ghost.org OR noreply@creators.spotify.com OR changelog@neon.tech"/>
+    <apps:property name="label" value="Stream"/>
+    <apps:property name="shouldMarkAsRead" value="true"/>
+    <apps:property name="shouldArchive" value="true"/>
+  </entry>
+
+  <!-- ============================================================ -->
+  <!-- TO READ                                                       -->
+  <!-- Newsletters opted into for focused reading time              -->
+  <!-- ============================================================ -->
+
+  <entry>
+    <category term="filter"/>
+    <title>Mail Filter</title>
+    <id>tag:mail.google.com,2008:filter:1500000000017</id>
+    <updated>2026-01-01T00:00:00Z</updated>
+    <apps:property name="hasTheWord" value="list:(6d4ada7b416eab03c71e1dcfb.1382601.list-id.mcsv.net)"/>
+    <apps:property name="label" value="To Read"/>
+    <apps:property name="shouldMarkAsRead" value="true"/>
+    <apps:property name="shouldArchive" value="true"/>
+  </entry>
+
 </feed>
